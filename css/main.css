@@ -20,3 +20,16 @@
 .chrono{
     font-size: 60px;
 }
+/* Animation */
+.blink {
+  animation: blink 1.5s steps(5, start) infinite;
+  -webkit-animation: blink 1.5s steps(5, start) infinite;
+}
+@keyframes blink {
+  from { visibility: 100%; }
+  to { visibility: hidden; }
+}
+@-webkit-keyframes blink {
+  from { visibility: 100%; }
+  to { visibility: hidden; }
+}
