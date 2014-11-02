@@ -82,6 +82,18 @@ angular.module('chronos-example', [])
     };
 
     /**
+     * Stops and sets values to Zero
+     * @return void
+     */
+    _stop = function(){
+        _isWorking = false;
+        _isPaused = false;
+        $interval.cancel(_increment);
+        _currentSeconds = 0;
+        _updateValues();
+    };
+
+    /**
      * If is working, stop increment
      * @return voi
      */
@@ -100,6 +112,7 @@ angular.module('chronos-example', [])
     return {
         start: _start,
         pause: _pause,
+        stop: _stop,
         isWorking: _getWorkingStatus,
         getDisplayHours : function(){
             return displayHours;
@@ -147,9 +160,13 @@ angular.module('chronos-example', [])
 
     // Stop chrono
     $scope.stop = function(){
-        console.info('Stoping chrono');
+        Chronos.stop();
+
     };
     
+    /*
+     * Watch and update Chronos values
+     */
     $scope.$watch(function(){
         $scope.Hours = Chronos.getDisplayHours();
         $scope.Minutes = Chronos.getDisplayMinutes();
