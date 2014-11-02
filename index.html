@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="chronos-example">
+    <head>
+        <script src="js/vendor/angular.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+    <section 
+        ng-controller="ChronosCtrl"
+        class="container">
+        <article class="text-center bg-primary center-block padding">
+            <h1>Chronos example</h1>
+        </article>
+        <!-- Display section -->
+        <article class="panel panel-default text-center v-offset">
+            <div class="panel-heading">Current time</div>
+            <div class="panel-body chrono">00:00</div>
+        </article>
+        <!-- end display section -->
+
+        <!-- Buttons section -->
+        <div class="text-center">
+            <div class="btn-group">
+                <button 
+                    ng-click="startOrPause()"
+                    type="button" 
+                    class="btn btn-success padding">
+                    <span class="glyphicon glyphicon-pause"></span>
+                    <span class="glyphicon glyphicon-play"></span> Start / Pause
+                </button>
+                <button 
+                    ng-click="catchTime()"
+                    type="button" 
+                    class="btn btn-warning padding">
+                    <span class="glyphicon glyphicon-circle-arrow-down"></span> Catch
+                </button>
+                <button 
+                    ng-click="stop()"
+                    type="button" 
+                    class="btn btn-danger padding">
+                    <span class="glyphicon glyphicon-stop"></span> Stop
+                </button>
+            </div>
+        </div>
+        <!-- end buttons section -->
+    </section>
+        <script src="js/main.js"></script>
+    </body>
+</html>
