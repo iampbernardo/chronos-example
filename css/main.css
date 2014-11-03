@@ -15,21 +15,36 @@
 }
 
 /*----------------------------------------------------------------------------
+    General styles
+------------------------------------------------------------------------------*/
+html{
+    overflow-y: scroll;
+}
+
+/*----------------------------------------------------------------------------
    Chrono section
 ------------------------------------------------------------------------------*/
 .chrono{
     font-size: 60px;
 }
+
 /* Animation */
+
 .blink {
   animation: blink 1.5s steps(5, start) infinite;
   -webkit-animation: blink 1.5s steps(5, start) infinite;
 }
+
 @keyframes blink {
   from { visibility: 100%; }
   to { visibility: hidden; }
 }
+
 @-webkit-keyframes blink {
   from { visibility: 100%; }
   to { visibility: hidden; }
+}
+
+.catched{
+    font-size: 30px;
 }

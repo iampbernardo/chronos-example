@@ -44,6 +44,11 @@
                     <span class="glyphicon glyphicon-stop"></span> Stop
                 </button>
             </div>
+            <div
+                ng-if="hasCatchedTime()"
+                class="alert alert-success v-offset catched" role="alert">
+                {{catchedTime}}
+            </div>
         </div>
         <!-- end buttons section -->
     </section>

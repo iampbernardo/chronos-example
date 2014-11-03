@@ -20,6 +20,9 @@ angular.module('chronos-example', [])
         _start,
         _pause,
         _stop,
+        _calculateHours,
+        _calculateMinutes,
+        _calculateSeconds,
         _updateValues,
         displayHours = '00',
         displayMinutes = '00',
@@ -30,34 +33,9 @@ angular.module('chronos-example', [])
      */
     _updateValues = function(){
         
-        displayHours = Math.floor(_currentSeconds / 3600);
-
-        if(displayHours < 10){
-            displayHours = '0' + displayHours.toString();
-        }else{
-            displayHours = displayHours.toString();
-        }
-        
-        displayMinutes = Math.floor((_currentSeconds - (parseInt(displayHours) * 3600)) / 60);
-
-        if(displayMinutes < 10){
-            displayMinutes = '0' + displayMinutes.toString();
-        }else{
-            displayMinutes = displayMinutes.toString();
-
-        }
-        console.info('Now minutes is '  + displayMinutes);
-
-
-        displaySeconds = _currentSeconds % 60;
-        if(displaySeconds < 10){
-            displaySeconds = '0' + displaySeconds.toString();
-        }else{
-            displaySeconds = displaySeconds.toString();
-        }
-
-        console.info('Now displaySeconds is: ' + displaySeconds);
-
+        displayHours = _calculateHours();
+        displayMinutes = _calculateMinutes();
+        displaySeconds = _calculateSeconds();
     };
     
 
@@ -74,7 +52,6 @@ angular.module('chronos-example', [])
            if(_isWorking){
                _currentSeconds+=1;
            };
-           console.info('Current seconds : ' + _currentSeconds);
            _updateValues();
 
         }, 1000);
@@ -101,6 +78,59 @@ angular.module('chronos-example', [])
         _isWorking = false;
         _isPaused = true;
         $interval.cancel(_increment);
+    };
+
+    /**
+     * Calcualte hours number based in current seconds
+     */
+    _calculateHours = function(){
+
+        var _displayHours = Math.floor(_currentSeconds / 3600);
+
+        if(displayHours < 10){
+            _displayHours = '0' + _displayHours.toString();
+        }else{
+            _displayHours = _displayHours.toString();
+        }
+
+        return _displayHours;
+    
+    };
+
+    /**
+     * Calcualte minutes number based in current seconds
+     */
+    _calculateMinutes = function(){
+
+        var _displayMinutes = Math.floor((_currentSeconds - (parseInt(displayHours) * 3600)) / 60);
+
+        if(_displayMinutes < 10){
+            _displayMinutes = '0' + _displayMinutes.toString();
+        }else{
+            _displayMinutes = _displayMinutes.toString();
+
+        }
+
+        return _displayMinutes;
+    
+    };
+
+
+    /**
+     * Calcualte seconds number based in current seconds
+     */
+    _calculateSeconds = function(){
+
+        var _displaySeconds = _currentSeconds % 60;
+
+        if(_displaySeconds < 10){
+            _displaySeconds = '0' + _displaySeconds.toString();
+        }else{
+            _displaySeconds = _displaySeconds.toString();
+        }
+
+        return _displaySeconds;
+    
     };
 
 
@@ -133,15 +163,25 @@ angular.module('chronos-example', [])
     'use strict';
 
 
+    /**
+     * Initialize values
+     */
     $scope.Hours = Chronos.getDisplayHours();
     $scope.Minutes = Chronos.getDisplayMinutes();
     $scope.Seconds = Chronos.getDisplaySeconds();
+    $scope.catchedTime = '';
 
+
+    /*
+     * Get current chronos status in order to make numbers blink
+     */
     $scope.isPaused = function(){
         return Chronos.getPausedStatus();
     };
-
-    // Check if it is working and pause or not and start
+    
+    /*
+    * Check if it is working and pause or not and start
+    */
     $scope.startOrPause = function(){
 
         if(!Chronos.isWorking()){
@@ -152,16 +192,41 @@ angular.module('chronos-example', [])
             Chronos.pause();
         }
     };
-
-    // Catch current time
+    
+    /*
+     * Get the value and put it in current $scope
+     */
     $scope.catchTime = function(){
-        console.info('Catching current time');
+        $scope.catchedTime = $scope.getCatchedTime();
     };
 
-    // Stop chrono
+
+
+    /**
+     * Get current time values and format as a String
+     */
+    $scope.getCatchedTime = function(){
+        var catchedTime = $scope.Hours + ':' +
+            $scope.Minutes + ':' +
+            $scope.Seconds;
+        
+        return catchedTime;
+    };
+
+
+    /**
+     * Stop chrono
+     */
     $scope.stop = function(){
         Chronos.stop();
+        $scope.catchedTime = '';
+    };
 
+    /**
+     * Evaluate if we have a catched time
+     */
+    $scope.hasCatchedTime = function(){
+        return $scope.catchedTime !== '';
     };
     
     /*
